@@ -1,0 +1,29 @@
+"Order Attachments","Order Attachments"
+"Invalid Request Params","Invalid Request Params"
+"Can't find a attachment to delete.","Can't find a attachment to delete."
+"Invalid Hash Params","Invalid Hash Params"
+OrderAttachment,OrderAttachment
+Attachments,Attachments
+"Can't find a attachment to update.","Can't find a attachment to update."
+"Remove Item","Remove Item"
+"Invalid File Type","Invalid File Type"
+"Write comment here","Write comment here"
+"Size of the file is greather than allowed","Size of the file is greather than allowed"
+"You have reached the limit of files","You have reached the limit of files"
+Download,Download
+"Drag or Select your files here","Drag or Select your files here"
+File,File
+Comment,Comment
+Action,Action
+"Download Item","Download Item"
+Sp,Sp
+General,General
+"Allow file upload during checkout","Allow file upload during checkout"
+"Allow file upload on order view page","Allow file upload on order view page"
+"File restrictions","File restrictions"
+Limit,Limit
+"Size, Kilobytes","Size, Kilobytes"
+"Allowed extensions","Allowed extensions"
+"File Type","File Type"
+Updated,Updated
+Modified,Modified

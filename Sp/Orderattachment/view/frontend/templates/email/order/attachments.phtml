@@ -1,0 +1,35 @@
+<?php $_order = $this->getOrderId() ?>
+<?php if ($_order): ?>
+    <?php $_items = $this->getOrderAttachments(); ?>
+    <table>
+        <tr class="email-summary">
+            <td>
+                <h3><?php echo __('Order Attachments') ?></h3>
+            </td>
+        </tr>
+    </table>
+    <table class="email-items">
+        <thead>
+            <tr>
+                <th class="item-info">
+                    <?php /* @escapeNotVerified */ echo __('File'); ?>
+                </th>
+                <th class="item-comment">
+                    <?php /* @escapeNotVerified */ echo __('Comment'); ?>
+                </th>
+                <th class="item-action">
+                    <?php /* @escapeNotVerified */ echo __('Action'); ?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($_items as $_item): ?>
+                <tr>
+                    <td class="col"><?php echo $_item['path'] ?></td>
+                    <td class="col"><?php echo $block->escapeHtml($_item['comment']); ?></td>
+                    <td class="col"><a href="<?php echo $_item['download'] ?>">Download</a></td>
+                </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>

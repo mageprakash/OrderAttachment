@@ -1,0 +1,37 @@
+<div class="sp-checkout-orderattachment" data-bind="fadeVisible: isVisible">
+    <div class="payment-option _collapsible opc-payment-additional order-attachments"
+         data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
+
+        <div class="payment-option-title field choice" data-role="title">
+            <span class="action action-toggle" id="block-attachments-heading" role="heading" aria-level="2" data-bind="text: getTitle()">
+            </span>
+        </div>
+        
+        <div class="payment-option-content" data-role="content">
+            <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data">
+                <div class="payment-option-inner">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input"
+                                   type="file"
+                                   style="display: none;"
+                                   id="order-attachment"
+                                   name="order-attachment[]" multiple />
+                            <div class="sp-attachment-drag-area" style="cursor:pointer"
+                            data-bind="
+                                click: selectFiles,
+                                event: {
+                                    dragenter: dragEnter,
+                                    dragover: dragOver,
+                                    drop: drop
+                                }">
+                                <h4 data-bind="i18n: 'Drag or Select your files here'"></h4>
+                            </div>
+                            <div class="attachment-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

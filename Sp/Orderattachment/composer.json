@@ -1,0 +1,16 @@
+{
+    "name": "sp/orderattachment",
+    "description": "Order Attachment Magento 2 extension",
+    "type": "magento2-module",
+    "version": "1.1.0",
+    "license": ["OSL-3.0"],
+    "require": {
+        "sp/checkout": "*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Sp\\Orderattachment\\": ""
+        }
+    }
+}

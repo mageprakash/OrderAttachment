@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        
+        <add id="Sp_Orderattachment::orderattachment_attachment"
+            title="Order Attachments"
+            module="Sp_Orderattachment"
+            sortOrder="1566"
+            parent="Magento_Sales::sales"
+            action="orderattachment/attachment"
+            resource="Sp_Orderattachment::orderattachment_attachment"/>
+    </menu>
+</config>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Sp_Core::sp">
+                    <resource id="Sp_Checkout::checkout">
+                        <resource id="Sp_Orderattachment::orderattachment_attachment" title="Order Attachments" sortOrder="1566">
+                            <resource id="Sp_Orderattachment::save" title="Save" sortOrder="10" />
+                            <resource id="Sp_Orderattachment::delete" title="Delete" sortOrder="20" />
+                            <resource id="Sp_Orderattachment::update" title="Update" sortOrder="30" />
+                            <resource id="Sp_Orderattachment::upload" title="Upload" sortOrder="40" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Sp_Checkout::config" title=>
+                                <resource id="Sp_Orderattachments::config" title="Order Attachments" sortOrder="1566"/>
+                            </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

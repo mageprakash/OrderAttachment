@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <orderattachments>
+            <general>
+                <enabled>0</enabled>
+                <checkout_upload>1</checkout_upload>
+                <orderview_upload>0</orderview_upload>
+            </general>
+            <restrictions>
+                <count>3</count>
+                <size>500</size>
+                <extension>jpg,jpeg,png,gif</extension>
+            </restrictions>
+        </orderattachments>
+    </default>
+</config>
