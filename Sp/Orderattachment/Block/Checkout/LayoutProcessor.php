@@ -89,7 +89,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             $fields = &$jsLayout['components']['checkout']['children']['steps']['children']['billing-step']
                        ['children']['payment']['children']['afterMethods']['children'];
             
-            $fields['order-attachment'] = ['component' => "Sp_Orderattachment/js/view/order/attachment"];
+            $fields['order-attachment'] = ['component' => "Sp_Orderattachment/js/view/order/payment/attachment"];
         }
 
         return $jsLayout;
@@ -105,7 +105,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
 
             $fields['order-attachment'] =
                 [
-                    'component' => "Sp_Orderattachment/js/view/order/attachment"
+                    'component' => "Sp_Orderattachment/js/view/order/shipment/attachment"
                 ];
         }
 
@@ -124,7 +124,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                     [
                         'component' => "uiComponent",
                         'displayArea' => "shippingAdditional",
-                        'children' =>  ['attachment'=> ['component' => "Sp_Orderattachment/js/view/order/attachment"]]
+                        'children' =>  ['attachment'=> ['component' => "Sp_Orderattachment/js/view/order/shipment/attachment"]]
                     ];
           }
 

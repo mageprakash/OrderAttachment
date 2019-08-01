@@ -34,9 +34,11 @@ define(
                     self.prepareObservers();
                 }, 1000);
             },
+            
             getTitle: function() {
                 return this.title;
             },
+
             selectFiles: function() {
                 $('#order-attachment').trigger('click');
             },
@@ -52,6 +54,7 @@ define(
                     this.processingFile(droppedFiles[i]);
                 }
             },
+
             prepareObservers: function() {
                 var self = this;
                 $(document).on("dragenter", function(e) {
@@ -130,15 +133,11 @@ define(
             },
 
             showRowLoader: function(row) {
-                var loader = row.find(".sp-attachment-loader");
-                $(loader).css({visibility:"visible", opacity: 0.0}).animate({opacity: 1.0}, 300);
+                jQuery('body').loader('show');
             },
 
             hideRowLoader: function(row) {
-                var loader = row.find(".sp-attachment-loader");
-                $(loader).animate({opacity: 0.0}, 300, function(){
-                    $(loader).css("visibility","hidden");
-                });
+                jQuery('body').loader('hide');
             },
 
             processingFile: function(file) {
@@ -213,6 +212,7 @@ define(
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         self.addError(thrownError);
+                        self.hideRowLoader(row);
                     }
                 });
 
@@ -239,9 +239,11 @@ define(
                                 $(this).remove();
                             });
                         }
+                        self.hideRowLoader(row);
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         self.addError(thrownError);
+                        self.hideRowLoader(row);
                     }
                 });
             },
