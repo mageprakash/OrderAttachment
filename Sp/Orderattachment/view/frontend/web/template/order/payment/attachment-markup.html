@@ -8,13 +8,15 @@
         </div>
         
         <div class="payment-option-content" data-role="content">
-            <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data">
+            <!-- <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data"> -->
                 <div class="payment-option-inner">
                     <div class="field">
+                        <div class="info" data-bind="html: getAttachmentInfo()"></div>
                         <div class="control">
                             <input class="input"
                                    type="file"
                                    style="display: none;"
+                                   data-bind="event: {change: fileUpload}" 
                                    id="order-attachment"
                                    name="order-attachment[]" multiple />
                             <div class="sp-attachment-drag-area" style="cursor:pointer"
@@ -31,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </div>

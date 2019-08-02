@@ -73,7 +73,8 @@ class AttachmentConfigProvider implements ConfigProviderInterface
             'spAttachmentComment' => __('Write comment here'),
             'spAttachmentInvalidSize' => __('Size of the file is greather than allowed') . '(' . $attachSize . ' KB)',
             'spAttachmentInvalidLimit' => __('You have reached the limit of files'),
-            'spAttachmentTitle' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE, ScopeInterface::SCOPE_STORE )
+            'spAttachmentTitle' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE, ScopeInterface::SCOPE_STORE ),
+            'spAttachmentInfromation' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION, ScopeInterface::SCOPE_STORE )
         ];
     }
 

@@ -27,7 +27,8 @@ define(
                 this.removeUrl = window.checkoutConfig.spAttachmentRemove;
                 this.comment = window.checkoutConfig.spAttachmentComment;
                 this.attachments = window.checkoutConfig.attachments;
-                this.title = window.checkoutConfig.spAttachmentTitle;
+                this.attachmentTitle = window.checkoutConfig.spAttachmentTitle;
+                this.attachmentInfromation = window.checkoutConfig.spAttachmentInfromation;
                 var self = this;
                 setTimeout(function() {
                     self.addUploadedItems();
@@ -36,11 +37,23 @@ define(
             },
 
             getTitle: function() {
-                return this.title;
+                return this.attachmentTitle;
+            },
+
+            getAttachmentInfo: function() {
+                return this.attachmentInfromation;
             },
 
             selectFiles: function() {
                 $('#order-attachment').trigger('click');
+            },
+
+            fileUpload: function(data, e) {                
+                var file    = e.target.files;
+                console.log(file);
+                for (var i = 0; i < file.length; i++) {
+                    this.processingFile(file[i]);
+                }
             },
 
             dragEnter: function(data, event) {},
@@ -50,13 +63,14 @@ define(
             drop: function(data, event) {
                 $('.order-attachment-drag-area').css("border", "2px dashed #1979c3");
                 var droppedFiles = event.originalEvent.dataTransfer.files;
+                console.log(droppedFiles);
                 for (var i = 0; i < droppedFiles.length; i++) {
                     this.processingFile(droppedFiles[i]);
                 }
             },
 
             prepareObservers: function() {
-                var self = this;
+              /*  var self = this;
                 $(document).on("dragenter", function(e) {
                     e.stopPropagation();
                     e.preventDefault();
@@ -74,7 +88,7 @@ define(
                     $.each(this.files, function(key, file) {
                         self.processingFile(file);
                     });
-                });
+                });*/
             },
 
             addUploadedItems: function() {

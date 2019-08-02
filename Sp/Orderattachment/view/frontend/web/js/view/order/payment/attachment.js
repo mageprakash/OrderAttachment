@@ -27,7 +27,8 @@ define(
                 this.removeUrl = window.checkoutConfig.spAttachmentRemove;
                 this.comment = window.checkoutConfig.spAttachmentComment;
                 this.attachments = window.checkoutConfig.attachments;
-                this.title = window.checkoutConfig.spAttachmentTitle;
+                this.attachmentTitle = window.checkoutConfig.spAttachmentTitle;
+                this.attachmentInfromation = window.checkoutConfig.spAttachmentInfromation;
                 var self = this;
                 setTimeout(function() {
                     self.addUploadedItems();
@@ -36,11 +37,23 @@ define(
             },
             
             getTitle: function() {
-                return this.title;
+                return this.attachmentTitle;
+            },
+
+            getAttachmentInfo: function() {
+                return this.attachmentInfromation;
             },
 
             selectFiles: function() {
                 $('#order-attachment').trigger('click');
+            },
+
+            fileUpload: function(data, e) {                
+                var file    = e.target.files;
+                console.log(file);
+                for (var i = 0; i < file.length; i++) {
+                    this.processingFile(file[i]);
+                }
             },
 
             dragEnter: function(data, event) {},
@@ -56,7 +69,7 @@ define(
             },
 
             prepareObservers: function() {
-                var self = this;
+                /*var self = this;
                 $(document).on("dragenter", function(e) {
                     e.stopPropagation();
                     e.preventDefault();
@@ -74,7 +87,7 @@ define(
                     $.each(this.files, function(key, file) {
                         self.processingFile(file);
                     });
-                });
+                });*/
             },
 
             addUploadedItems: function() {
@@ -133,11 +146,11 @@ define(
             },
 
             showRowLoader: function(row) {
-                jQuery('body').loader('show');
+                //jQuery('body').loader('show');
             },
 
             hideRowLoader: function(row) {
-                jQuery('body').loader('hide');
+                //jQuery('body').loader('hide');
             },
 
             processingFile: function(file) {
