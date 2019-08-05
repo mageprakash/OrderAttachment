@@ -1,14 +1,23 @@
 {
     "name": "sp/orderattachment",
     "description": "Order Attachment Magento 2 extension",
+    "homepage": "https://github.com/prakash282/OrderAttachment",
     "type": "magento2-module",
-    "version": "1.1.0",
-    "license": ["OSL-3.0"],
-    "require": {
-        "sp/checkout": "*"
+    "version": "1.1.1",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Prakash Patel",
+            "email": "paks.r.patel@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/prakash282/OrderAttachment"
     },
     "autoload": {
-        "files": [ "registration.php" ],
+        "files": [
+            "registration.php"
+        ],
         "psr-4": {
             "Sp\\Orderattachment\\": ""
         }
