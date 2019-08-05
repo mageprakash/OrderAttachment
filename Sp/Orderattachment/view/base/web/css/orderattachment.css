@@ -12,7 +12,9 @@
     border-bottom: 1px solid #ccc;
     position: relative;
 }
-
+.sp-checkout-orderattachment{
+    padding-bottom: 10px;
+}
 .sp-attachment-row .filename {
     color: rgba(0,0,0,0.5);
     font-size: 0.7em;
@@ -115,29 +117,6 @@
   }
 }
 
-/* firecheckout col3 and col2-alt fixes */
-.firecheckout-col2-set.alt .sp-attachment-row-content,
-.firecheckout-col3-set .sp-attachment-row-content { display: block; }
-.firecheckout-col2-set.alt .sp-attachment-row .order-attachment-preview,
-.firecheckout-col3-set .sp-attachment-row .order-attachment-preview {
-    width: 100%;
-    box-sizing: border-box;
-    display: block;
-    margin: 0 auto;
-}
-.firecheckout-col2-set.alt .sp-attachment-row .order-attachment-content,
-.firecheckout-col3-set .sp-attachment-row .order-attachment-content {
-    width: 100%;
-    display: block;
-    margin: 0 auto;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: center;
-}
-.firecheckout-col2-set.alt .sp-attachment-row .order-attachment-preview,
-.firecheckout-col3-set .sp-attachment-row .order-attachment-preview {
-    height: auto;
-}
 @media (max-width: 480px) {
     .sp-attachment-row-content { display: block; }
     .sp-attachment-row .order-attachment-preview {

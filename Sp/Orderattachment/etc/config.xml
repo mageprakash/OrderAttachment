@@ -6,12 +6,13 @@
                 <enabled>0</enabled>
                 <checkout_upload>1</checkout_upload>
                 <orderview_upload>0</orderview_upload>
-            </general>
-            <restrictions>
+                <attachment_title>Medical Prescription</attachment_title>
+         		<attachment_information></attachment_information>
+         		<display_attachment>after-shipping-methods</display_attachment>
                 <count>3</count>
                 <size>500</size>
                 <extension>jpg,jpeg,png,gif</extension>
-            </restrictions>
+            </general>
         </orderattachments>
     </default>
 </config>

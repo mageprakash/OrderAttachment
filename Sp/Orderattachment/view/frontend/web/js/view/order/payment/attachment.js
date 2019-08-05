@@ -36,77 +36,6 @@ define(
                 }, 1000);
             },
             
-            getTitle: function() {
-                return this.attachmentTitle;
-            },
-
-            getAttachmentInfo: function() {
-                return this.attachmentInfromation;
-            },
-
-            selectFiles: function() {
-                $('#order-attachment').trigger('click');
-            },
-
-            fileUpload: function(data, e) {                
-                var file    = e.target.files;
-                console.log(file);
-                for (var i = 0; i < file.length; i++) {
-                    this.processingFile(file[i]);
-                }
-            },
-
-            dragEnter: function(data, event) {},
-
-            dragOver: function(data, event) {},
-
-            drop: function(data, event) {
-                $('.order-attachment-drag-area').css("border", "2px dashed #1979c3");
-                var droppedFiles = event.originalEvent.dataTransfer.files;
-                for (var i = 0; i < droppedFiles.length; i++) {
-                    this.processingFile(droppedFiles[i]);
-                }
-            },
-
-            prepareObservers: function() {
-                /*var self = this;
-                $(document).on("dragenter", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-                $(document).on("dragover", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-                $(document).on("drop", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-
-                $('#order-attachment').on('change', function(event) {
-                    $.each(this.files, function(key, file) {
-                        self.processingFile(file);
-                    });
-                });*/
-            },
-
-            addUploadedItems: function() {
-                var attachments = this.attachments,
-                    self = this;
-                if (attachments) {
-                    for (var i in attachments) {
-                        if (!attachments.hasOwnProperty(i)) {
-                            continue;
-                        }
-                        var attachment = attachments[i];
-                        var uniq = Math.random().toString(32).slice(2);
-                        self.files[uniq] = attachment.path;
-                        self.addAttachmentMarkup(uniq, attachment.path);
-                        self.addAttachmentContent(uniq, attachment);
-                    }
-                }
-            },
-
             addAttachmentMarkup: function(pos, fileName) {
                 var container = $('.attachment-container'),
                     newRow = $('<div class="sp-attachment-row" rel="' + pos + '"></div>').appendTo(container),
@@ -323,6 +252,77 @@ define(
                         });
                     }
                 });
+            },
+
+            getTitle: function() {
+                return this.attachmentTitle;
+            },
+
+            getAttachmentInfo: function() {
+                return this.attachmentInfromation;
+            },
+
+            selectFiles: function() {
+                $('#order-attachment').trigger('click');
+            },
+
+            fileUpload: function(data, e) {                
+                var file    = e.target.files;
+                console.log(file);
+                for (var i = 0; i < file.length; i++) {
+                    this.processingFile(file[i]);
+                }
+            },
+
+            dragEnter: function(data, event) {},
+
+            dragOver: function(data, event) {},
+
+            drop: function(data, event) {
+                $('.order-attachment-drag-area').css("border", "2px dashed #1979c3");
+                var droppedFiles = event.originalEvent.dataTransfer.files;
+                for (var i = 0; i < droppedFiles.length; i++) {
+                    this.processingFile(droppedFiles[i]);
+                }
+            },
+
+            prepareObservers: function() {
+                /*var self = this;
+                $(document).on("dragenter", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+                $(document).on("dragover", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+                $(document).on("drop", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+                $('#order-attachment').on('change', function(event) {
+                    $.each(this.files, function(key, file) {
+                        self.processingFile(file);
+                    });
+                });*/
+            },
+
+            addUploadedItems: function() {
+                var attachments = this.attachments,
+                    self = this;
+                if (attachments) {
+                    for (var i in attachments) {
+                        if (!attachments.hasOwnProperty(i)) {
+                            continue;
+                        }
+                        var attachment = attachments[i];
+                        var uniq = Math.random().toString(32).slice(2);
+                        self.files[uniq] = attachment.path;
+                        self.addAttachmentMarkup(uniq, attachment.path);
+                        self.addAttachmentContent(uniq, attachment);
+                    }
+                }
             }
         });
     }

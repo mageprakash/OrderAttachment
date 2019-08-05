@@ -35,117 +35,6 @@ define(
                     self.prepareObservers();
                 }, 1000);
             },
-
-            getTitle: function() {
-                return this.attachmentTitle;
-            },
-
-            getAttachmentInfo: function() {
-                return this.attachmentInfromation;
-            },
-
-            selectFiles: function() {
-                $('#order-attachment').trigger('click');
-            },
-
-            fileUpload: function(data, e) {                
-                var file    = e.target.files;
-                console.log(file);
-                for (var i = 0; i < file.length; i++) {
-                    this.processingFile(file[i]);
-                }
-            },
-
-            dragEnter: function(data, event) {},
-
-            dragOver: function(data, event) {},
-
-            drop: function(data, event) {
-                $('.order-attachment-drag-area').css("border", "2px dashed #1979c3");
-                var droppedFiles = event.originalEvent.dataTransfer.files;
-                console.log(droppedFiles);
-                for (var i = 0; i < droppedFiles.length; i++) {
-                    this.processingFile(droppedFiles[i]);
-                }
-            },
-
-            prepareObservers: function() {
-              /*  var self = this;
-                $(document).on("dragenter", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-                $(document).on("dragover", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-                $(document).on("drop", function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                });
-
-                $('#order-attachment').on('change', function(event) {
-                    $.each(this.files, function(key, file) {
-                        self.processingFile(file);
-                    });
-                });*/
-            },
-
-            addUploadedItems: function() {
-                var attachments = this.attachments,
-                    self = this;
-                if (attachments) {
-                    for (var i in attachments) {
-                        if (!attachments.hasOwnProperty(i)) {
-                            continue;
-                        }
-                        var attachment = attachments[i];
-                        var uniq = Math.random().toString(32).slice(2);
-                        self.files[uniq] = attachment.path;
-                        self.addAttachmentMarkup(uniq, attachment.path);
-                        self.addAttachmentContent(uniq, attachment);
-                    }
-                }
-            },
-
-            addAttachmentMarkup: function(pos, fileName) {
-                var container = $('.attachment-container'),
-                    newRow = $('<div class="sp-attachment-row" rel="' + pos + '"></div>').appendTo(container),
-                    loader = $('<div class="sp-attachment-loader"><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>').appendTo(newRow),
-                    rowContent = $('<div class="sp-attachment-row-content"></div>').appendTo(newRow),
-                    preview = $('<div class="order-attachment-preview"></div>').appendTo(rowContent);
-                $('<div class="order-attachment-content"></div>').appendTo(rowContent);
-                var finfo = $('<div class="attachment-file"></div>').appendTo(preview);
-                finfo.append('<div class="filename">' + fileName + "</div>");
-            },
-
-            addAttachmentContent: function(pos, attachment) {
-                var self = this,
-                    row = $('div.sp-attachment-row[rel="' + pos + '"]'),
-                    preview = row.find(".order-attachment-preview");
-                this.previewFile(preview, attachment.type, attachment.preview);
-                var content = row.find(".order-attachment-content"),
-                    attachId = attachment.attachment_id;
-                var html = '<textarea id="attachment-comment'+attachId+'" rows="4" name="attachment['+
-                            attachId+'][comment]" class="comment" placeholder="'+this.comment+'">'+attachment.comment+'</textarea>' +
-                            '<a id="sp-attachment-remove'+attachId+'" class="sp-attachment-remove" title="'+this.removeItem+'" href="#"></a>'+
-                            '<input type="hidden" class="sp-attachment-id'+attachId+'" name="attachment-id" value="'+attachId+'">' +
-                            '<input type="hidden" class="sp-attachment-hash'+attachId+'" name="attachment-hash" value="'+attachment.hash+'">';
-                $(html).appendTo(content);
-                this.hideRowLoader(row);
-                var id = row.find('.sp-attachment-id' + attachId).val(),
-                    hash = row.find('.sp-attachment-hash' + attachId).val();
-                $('#attachment-comment' + attachId).focusout(function() {
-                    if ($(this).val()) {
-                        self.updateComment(id, hash, $(this).val(), pos);
-                    }
-                });
-                $('#sp-attachment-remove' + attachId).on('click', function(event) {
-                    event.preventDefault();
-                    self.removeFile(id, hash, pos);
-                });
-            },
-
             showRowLoader: function(row) {
                 jQuery('body').loader('show');
             },
@@ -323,7 +212,118 @@ define(
                         });
                     }
                 });
+            },
+
+            getTitle: function() {
+                return this.attachmentTitle;
+            },
+
+            getAttachmentInfo: function() {
+                return this.attachmentInfromation;
+            },
+
+            selectFiles: function() {
+                $('#order-attachment').trigger('click');
+            },
+
+            fileUpload: function(data, e) {                
+                var file    = e.target.files;
+                console.log(file);
+                for (var i = 0; i < file.length; i++) {
+                    this.processingFile(file[i]);
+                }
+            },
+
+            dragEnter: function(data, event) {},
+
+            dragOver: function(data, event) {},
+
+            drop: function(data, event) {
+                $('.order-attachment-drag-area').css("border", "2px dashed #1979c3");
+                var droppedFiles = event.originalEvent.dataTransfer.files;
+                console.log(droppedFiles);
+                for (var i = 0; i < droppedFiles.length; i++) {
+                    this.processingFile(droppedFiles[i]);
+                }
+            },
+
+            prepareObservers: function() {
+              /*  var self = this;
+                $(document).on("dragenter", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+                $(document).on("dragover", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+                $(document).on("drop", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+                $('#order-attachment').on('change', function(event) {
+                    $.each(this.files, function(key, file) {
+                        self.processingFile(file);
+                    });
+                });*/
+            },
+
+            addUploadedItems: function() {
+                var attachments = this.attachments,
+                    self = this;
+                if (attachments) {
+                    for (var i in attachments) {
+                        if (!attachments.hasOwnProperty(i)) {
+                            continue;
+                        }
+                        var attachment = attachments[i];
+                        var uniq = Math.random().toString(32).slice(2);
+                        self.files[uniq] = attachment.path;
+                        self.addAttachmentMarkup(uniq, attachment.path);
+                        self.addAttachmentContent(uniq, attachment);
+                    }
+                }
+            },
+
+            addAttachmentMarkup: function(pos, fileName) {
+                var container = $('.attachment-container'),
+                    newRow = $('<div class="sp-attachment-row" rel="' + pos + '"></div>').appendTo(container),
+                    loader = $('<div class="sp-attachment-loader"><div class="circle"></div><div class="circle"></div><div class="circle"></div></div>').appendTo(newRow),
+                    rowContent = $('<div class="sp-attachment-row-content"></div>').appendTo(newRow),
+                    preview = $('<div class="order-attachment-preview"></div>').appendTo(rowContent);
+                $('<div class="order-attachment-content"></div>').appendTo(rowContent);
+                var finfo = $('<div class="attachment-file"></div>').appendTo(preview);
+                finfo.append('<div class="filename">' + fileName + "</div>");
+            },
+
+            addAttachmentContent: function(pos, attachment) {
+                var self = this,
+                    row = $('div.sp-attachment-row[rel="' + pos + '"]'),
+                    preview = row.find(".order-attachment-preview");
+                this.previewFile(preview, attachment.type, attachment.preview);
+                var content = row.find(".order-attachment-content"),
+                    attachId = attachment.attachment_id;
+                var html = '<textarea id="attachment-comment'+attachId+'" rows="4" name="attachment['+
+                            attachId+'][comment]" class="comment" placeholder="'+this.comment+'">'+attachment.comment+'</textarea>' +
+                            '<a id="sp-attachment-remove'+attachId+'" class="sp-attachment-remove" title="'+this.removeItem+'" href="#"></a>'+
+                            '<input type="hidden" class="sp-attachment-id'+attachId+'" name="attachment-id" value="'+attachId+'">' +
+                            '<input type="hidden" class="sp-attachment-hash'+attachId+'" name="attachment-hash" value="'+attachment.hash+'">';
+                $(html).appendTo(content);
+                this.hideRowLoader(row);
+                var id = row.find('.sp-attachment-id' + attachId).val(),
+                    hash = row.find('.sp-attachment-hash' + attachId).val();
+                $('#attachment-comment' + attachId).focusout(function() {
+                    if ($(this).val()) {
+                        self.updateComment(id, hash, $(this).val(), pos);
+                    }
+                });
+                $('#sp-attachment-remove' + attachId).on('click', function(event) {
+                    event.preventDefault();
+                    self.removeFile(id, hash, pos);
+                });
             }
+
         });
     }
 );

@@ -6,7 +6,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
-     * @var \Sp\Orderattachment\Model\Upload
+     * @var \Sp\Orderattachment\Helper\Upload
      */
     protected $uploadModel;
 
@@ -52,7 +52,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Sp\Orderattachment\Model\Upload $uploadModel
+     * @param \Sp\Orderattachment\Helper\Upload $uploadModel
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param \Magento\Framework\Math\Random $random
@@ -64,7 +64,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Sp\Orderattachment\Model\Upload $uploadModel,
+        \Sp\Orderattachment\Helper\Upload $uploadModel,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Framework\Math\Random $random,
@@ -101,7 +101,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             unset($result['path']);
             $result['success'] = true;
             $result['url'] = $this->storeManager->getStore()
-                ->getBaseUrl() . "var/orderattachment/" . $result['file'];
+                ->getBaseUrl() . "pub/media/orderattachment/" . $result['file'];
 
             $hash = $this->random->getRandomString(32);
             $date = $this->dateTime->gmtDate('Y-m-d H:i:s');
@@ -191,7 +191,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             }
 
             $varDirectory = $this->fileSystem
-                ->getDirectoryRead(DirectoryList::VAR_DIR)
+                ->getDirectoryRead(DirectoryList::MEDIA)
                 ->getAbsolutePath("orderattachment");
 
             $attachFile = $varDirectory . "/" . $attachment->getPath();
@@ -297,7 +297,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             }
 
             $varDirectory = $this->fileSystem
-                ->getDirectoryRead(DirectoryList::VAR_DIR)
+                ->getDirectoryRead(DirectoryList::MEDIA)
                 ->getAbsolutePath("orderattachment");
             $attachmentFile = $varDirectory . "/" . $attachment->getPath();
 
@@ -326,35 +326,6 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Get attachment config json
-     * @param mixed $block
-     * @return string
-     */
-    public function getAttachmentConfig($block)
-    {
-        $config = [
-            'attachments' => $block->getOrderAttachments(),
-            'limit' => $this->scopeConfig->getValue(
-                \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_FILE_LIMIT,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-            ),
-            'size' => $this->scopeConfig->getValue(
-                \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_FILE_SIZE,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-            ),
-            'ext' => $this->scopeConfig->getValue(
-                \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_FILE_EXT,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-            ),
-            'uploadUrl' => $block->getUploadUrl(),
-            'updateUrl' => $block->getUpdateUrl(),
-            'removeUrl' => $block->getRemoveUrl()
-        ];
-
-        return $this->jsonEncoder->encode($config);
-    }
-
-    /**
      * Load order attachments by order id or by quote id
      * @param  int $entityId
      * @param  bool $byOrder load by order or by quote
@@ -366,7 +337,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         if ($byOrder) {
             $attachments = $attachmentModel->getOrderAttachments($entityId);
             $baseUrl = $this->storeManager->getStore()
-                ->getBaseUrl() . DirectoryList::VAR_DIR . '/orderattachment/';
+                ->getBaseUrl() . DirectoryList::MEDIA . '/orderattachment/';
         } else {
             $attachments = $attachmentModel->getAttachmentsByQuote($entityId);
         }
@@ -402,29 +373,5 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         return false;
-    }
-
-    /**
-     * Get config for order attachments enabled
-     * @return boolean
-     */
-    public function isOrderAttachmentEnabled()
-    {
-        return (bool)$this->scopeConfig->getValue(
-            \Sp\Orderattachment\Model\Attachment::XML_PATH_ENABLE_ATTACHMENT,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-    }
-
-    /**
-     * Get config for order view file upload enabled
-     * @return boolean
-     */
-    public function isAllowedFileUpload()
-    {
-        return (bool)$this->scopeConfig->getValue(
-            \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_ON_ORDER_VIEW,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
     }
 }

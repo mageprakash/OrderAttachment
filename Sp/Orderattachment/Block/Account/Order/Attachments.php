@@ -16,6 +16,11 @@ class Attachments extends \Magento\Framework\View\Element\Template
     protected $attachmentHelper;
 
     /**
+     * @var \Sp\Orderattachment\Helper\Data
+     */
+    protected $dataHelper;
+
+    /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Sp\Orderattachment\Helper\Attachment $attachmentHelper
@@ -24,11 +29,13 @@ class Attachments extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Sp\Orderattachment\Helper\Attachment $attachmentHelper,
+        \Sp\Orderattachment\Helper\Data $dataHelper,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->coreRegistry = $registry;
         $this->attachmentHelper = $attachmentHelper;
+        $this->dataHelper = $dataHelper;
     }
 
     public function getOrder()
@@ -38,12 +45,12 @@ class Attachments extends \Magento\Framework\View\Element\Template
 
     public function isOrderAttachmentEnabled()
     {
-        return $this->attachmentHelper->isOrderAttachmentEnabled();
+        return $this->dataHelper->isOrderAttachmentEnabled();
     }
 
     public function getAttachmentConfig()
     {
-        $config = $this->attachmentHelper->getAttachmentConfig($this);
+        $config = $this->dataHelper->getAttachmentConfig($this);
 
         return $config;
     }
@@ -57,7 +64,7 @@ class Attachments extends \Magento\Framework\View\Element\Template
 
     public function isAllowedFileUpload()
     {
-        return $this->attachmentHelper->isAllowedFileUpload();
+        return $this->dataHelper->isAllowedFileUpload();
     }
 
     public function getUploadUrl()

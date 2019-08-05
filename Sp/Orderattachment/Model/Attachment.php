@@ -8,6 +8,29 @@ use Magento\Framework\Model\AbstractModel;
 class Attachment extends AbstractModel implements AttachmentInt, IdentityInterface
 {
     /**
+     * XML configuration paths for "Allow file upload during checkout" property
+     */
+    const XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION = 'orderattachments/general/attachment_information';
+
+    /**
+     * XML configuration paths for "Allow file upload during checkout" property
+     */
+    const XML_PATH_ATTACHMENT_ON_DISPLAY_ATTACHMENT = 'orderattachments/general/display_attachment';
+
+    /**
+     * XML configuration paths for "File restrictions - limit" property
+     */
+    const XML_PATH_ATTACHMENT_FILE_LIMIT = 'orderattachments/general/count';
+    /**
+     * XML configuration paths for "File restrictions - size" property
+     */
+    const XML_PATH_ATTACHMENT_FILE_SIZE = 'orderattachments/general/size';
+
+    /**
+     * XML configuration paths for "File restrictions - Allowed extensions" property
+     */
+    const XML_PATH_ATTACHMENT_FILE_EXT = 'orderattachments/general/extension';
+    /**
      * XML configuration paths for "Enabled orderattachment module" property
      */
     const XML_PATH_ENABLE_ATTACHMENT = 'orderattachments/general/enabled';
@@ -23,29 +46,6 @@ class Attachment extends AbstractModel implements AttachmentInt, IdentityInterfa
      * XML configuration paths for "Allow file upload during checkout" property
      */
     const XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE = 'orderattachments/general/attachment_title';
-    /**
-     * XML configuration paths for "Allow file upload during checkout" property
-     */
-    const XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION = 'orderattachments/general/attachment_information';
-
-    /**
-     * XML configuration paths for "Allow file upload during checkout" property
-     */
-    const XML_PATH_ATTACHMENT_ON_DISPLAY_ATTACHMENT = 'orderattachments/general/display_attachment';
-
-    /**
-     * XML configuration paths for "File restrictions - limit" property
-     */
-    const XML_PATH_ATTACHMENT_FILE_LIMIT = 'orderattachments/restrictions/count';
-    /**
-     * XML configuration paths for "File restrictions - size" property
-     */
-    const XML_PATH_ATTACHMENT_FILE_SIZE = 'orderattachments/restrictions/size';
-
-    /**
-     * XML configuration paths for "File restrictions - Allowed extensions" property
-     */
-    const XML_PATH_ATTACHMENT_FILE_EXT = 'orderattachments/restrictions/extension';
     /**
      * cache tag
      */

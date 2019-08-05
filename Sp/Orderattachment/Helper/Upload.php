@@ -1,5 +1,5 @@
 <?php
-namespace Sp\Orderattachment\Model;
+namespace Sp\Orderattachment\Helper;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Store\Model\ScopeInterface;
@@ -48,7 +48,7 @@ class Upload
             ScopeInterface::SCOPE_STORE
         );
         $varDirectoryPath = $this->fileSystem
-            ->getDirectoryRead(DirectoryList::VAR_DIR)
+            ->getDirectoryRead(DirectoryList::MEDIA)
             ->getAbsolutePath("orderattachment");
 
         $result = $this->uploaderFactory

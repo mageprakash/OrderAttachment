@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
+        <tab id="sp" translate="label" sortOrder="10">
+            <label>SP</label>
+         </tab>
          <section id="orderattachments" translate="label" type="text" sortOrder="1566" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Order Attachments</label>
-            <tab>sales</tab>
+            <tab>sp</tab>
             <resource>Sp_Orderattachments::config</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
@@ -23,28 +26,26 @@
                 <field id="attachment_title" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Attachment Title</label>
                 </field>
-                 <field id="attachment_information" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                 <field id="attachment_information" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Attachment Information</label>
                 </field>
-                <field id="display_attachment" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="display_attachment" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Display Attachment</label>
                     <source_model>Sp\Orderattachment\Model\Config\Source\AttachmentDisplayOptions</source_model>
                 </field>
-            </group>
-            <group id="restrictions" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>File restrictions</label>
-                <field id="count" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="count" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Limit</label>
                     <comment>Per Order</comment>
                 </field>
-                <field id="size" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="size" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Size, Kilobytes</label>
                     <comment>Per File</comment>
                 </field>
-                <field id="extension" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="extension" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Allowed extensions</label>
                 </field>
             </group>
+            
         </section> 
     </system>
 </config>
