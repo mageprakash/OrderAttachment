@@ -12,7 +12,7 @@
                     <arguments>
                         <argument name="key" xsi:type="string">attachment</argument>
                         <argument name="path" xsi:type="string">orderattachment/view/attachment</argument>
-                        <argument name="label" xsi:type="helper" helper="Sp\Orderattachment\Helper\Data::getLabel"  translate="true"></argument>
+                        <argument name="label" xsi:type="helper" helper="Sp\Orderattachment\Helper\Data::getLabel"></argument>
                     </arguments>
                 </block>
         </referenceBlock>
