@@ -52,7 +52,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function isAllowedFileUpload()
     {
         return (bool)$this->scopeConfig->getValue(
-            \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_ON_ORDER_VIEW,
+            \Sp\Orderattachment\Model\Attachment::XML_PATH_ENABLE_ATTACHMENT,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }

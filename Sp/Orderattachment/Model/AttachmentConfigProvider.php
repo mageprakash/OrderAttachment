@@ -114,12 +114,8 @@ class AttachmentConfigProvider implements ConfigProviderInterface
             Attachment::XML_PATH_ENABLE_ATTACHMENT,
             ScopeInterface::SCOPE_STORE
         );
-        $onCheckout = $this->scopeConfig->getValue(
-            Attachment::XML_PATH_ATTACHMENT_ON_CHECKOUT,
-            ScopeInterface::SCOPE_STORE
-        );
 
-        return ($moduleEnabled && $onCheckout);
+        return ($moduleEnabled);
     }
 
     private function getOrderAttachmentFileLimit()
