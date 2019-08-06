@@ -17,25 +17,32 @@ To access extension, go to Admin – Store – Configuration – Sp – Order At
 6. Size Kilobytes
 7. Allowed Extensions
 
-1. Enabled 
+**1. Enabled** 
+
 Enable/Disable order attachment from here
 
-2. Attachment Title 
+**2. Attachment Title** 
+
 Enter the title of Attachment which will reflect into checkout, customer account and admin order view pages for example.  Medical Prescription Attachment or Passport copy Attachment
 
-3. Attachment Information
+**3. Attachment Information**
+
 Enter Attachment information which will show into checkout page after Attachment title.
 
-4. Display Attachment
+**4. Display Attachment**
+
 You can set the attachment section After shipping information, After shipping methods and After Payment methods.
 
-5. Limit 
+**5. Limit **
+
 You can set limit upload per order.
 
-6. Size Kilobytes
+**6. Size Kilobytes**
+
 Set maximum file size in Kilobytes
 
-7. Allowed Extensions
+**7. Allowed Extensions**
+
 Enter Allow file type extension
 
 ## **Checkout page After Shipping information:**
