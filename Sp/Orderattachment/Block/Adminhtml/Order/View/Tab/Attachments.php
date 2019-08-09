@@ -90,12 +90,12 @@ class Attachments extends AbstractOrder implements TabInterface
 
     public function getTabLabel()
     {
-        return __($this->scopeConfig->getValue(Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE, ScopeInterface::SCOPE_STORE));
+        return __($this->dataHelper->getTitle());
     }
 
     public function getTabTitle()
     {
-        return __($this->scopeConfig->getValue(Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE, ScopeInterface::SCOPE_STORE));
+        return __($this->dataHelper->getTitle());
     }
 
     public function canShowTab()

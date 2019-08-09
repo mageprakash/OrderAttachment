@@ -36,11 +36,11 @@ define(
                 }, 1000);
             },
             showRowLoader: function(row) {
-                jQuery('body').loader('show');
+                $('body').trigger('processStart');
             },
 
             hideRowLoader: function(row) {
-                jQuery('body').loader('hide');
+               $('body').trigger('processStop');
             },
 
             processingFile: function(file) {
@@ -111,7 +111,7 @@ define(
                         if (!result.success) {
                             self.addError(result.error);
                         }
-                        self.hideRowLoader(row);
+                        self.hideRowLoader();
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         self.addError(thrownError);
@@ -137,15 +137,16 @@ define(
                         var result = JSON.parse(data);
                         if (result.success) {
                             delete self.files[pos];
+                                                        console.log("SADASDSAD");
                             row.fadeOut("500", function() {
                                 $(this).remove();
                             });
                         }
-                        self.hideRowLoader(row);
+                        self.hideRowLoader();
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         self.addError(thrownError);
-                        self.hideRowLoader(row);
+                        self.hideRowLoader();
                     }
                 });
             },
@@ -310,7 +311,7 @@ define(
                             '<input type="hidden" class="sp-attachment-id'+attachId+'" name="attachment-id" value="'+attachId+'">' +
                             '<input type="hidden" class="sp-attachment-hash'+attachId+'" name="attachment-hash" value="'+attachment.hash+'">';
                 $(html).appendTo(content);
-                this.hideRowLoader(row);
+                this.hideRowLoader();
                 var id = row.find('.sp-attachment-id' + attachId).val(),
                     hash = row.find('.sp-attachment-hash' + attachId).val();
                 $('#attachment-comment' + attachId).focusout(function() {

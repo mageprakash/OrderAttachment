@@ -21,18 +21,22 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         parent::__construct($context);
         $this->jsonEncoder = $jsonEncoder;
     }
-    
+
     /**
-     * Get config for order attachments enabled
+     * Get title
      * @return boolean
      */
-    public function getLabel()
+    public function getTitle()
     {
-        return $this->scopeConfig->getValue(
+        $titleValue = $this->scopeConfig->getValue(
             \Sp\Orderattachment\Model\Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
+
+     
+        return (trim($titleValue))?$titleValue:\Sp\Orderattachment\Model\Attachment::DEFAULT_TITLE_ATTACHMENT;
     }
+    
     /**
      * Get config for order attachments enabled
      * @return boolean
@@ -44,19 +48,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }
-
-    /**
-     * Get config for order view file upload enabled
-     * @return boolean
-     */
-    public function isAllowedFileUpload()
-    {
-        return (bool)$this->scopeConfig->getValue(
-            \Sp\Orderattachment\Model\Attachment::XML_PATH_ENABLE_ATTACHMENT,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
-    }
-
+    
     /**
      * Get attachment config json
      * @param mixed $block

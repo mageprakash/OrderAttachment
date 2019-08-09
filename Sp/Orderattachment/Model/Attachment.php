@@ -39,6 +39,10 @@ class Attachment extends AbstractModel implements AttachmentInt, IdentityInterfa
      */
     const XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE = 'orderattachments/general/attachment_title';
     /**
+     * XML configuration paths for "Allow file upload during checkout" property
+     */
+    const DEFAULT_TITLE_ATTACHMENT = 'Order Attachment';
+    /**
      * cache tag
      */
     const CACHE_TAG = 'orderattachment_attachment';

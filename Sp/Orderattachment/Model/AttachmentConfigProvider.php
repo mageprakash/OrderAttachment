@@ -36,6 +36,11 @@ class AttachmentConfigProvider implements ConfigProviderInterface
     protected $storeManager;
 
     /**
+     * @var \Sp\Orderattachment\Helper\Data
+     */
+    protected $dataHelper;
+
+    /**
      * @param ScopeConfigInterface $scopeConfig
      * @param UrlInterface $urlBuilder
      * @param CheckoutSession $checkoutSession
@@ -47,13 +52,15 @@ class AttachmentConfigProvider implements ConfigProviderInterface
         UrlInterface $urlBuilder,
         CheckoutSession $checkoutSession,
         \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection $attachmentCollection,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Sp\Orderattachment\Helper\Data $dataHelper
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->urlBuilder = $urlBuilder;
         $this->checkoutSession = $checkoutSession;
         $this->attachmentCollection = $attachmentCollection;
         $this->storeManager = $storeManager;
+        $this->dataHelper = $dataHelper;
     }
 
     public function getConfig()
@@ -73,7 +80,7 @@ class AttachmentConfigProvider implements ConfigProviderInterface
             'spAttachmentComment' => __('Write comment here'),
             'spAttachmentInvalidSize' => __('Size of the file is greather than allowed') . '(' . $attachSize . ' KB)',
             'spAttachmentInvalidLimit' => __('You have reached the limit of files'),
-            'spAttachmentTitle' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_TITLE, ScopeInterface::SCOPE_STORE ),
+            'spAttachmentTitle' =>  $this->dataHelper->getTitle(),
             'spAttachmentInfromation' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION, ScopeInterface::SCOPE_STORE )
         ];
     }
@@ -101,6 +108,15 @@ class AttachmentConfigProvider implements ConfigProviderInterface
                 $attachment->setPath(basename($attachment->getPath()));
             }
             $result = $attachments->toArray();
+            /*echo "<pre>";
+            print_r( $result);
+            die;*/
+
+            foreach ($result['items'] as $key => $value) {
+                $result['items'][$key]['attachment_class'] = 'sp-attachment-id'.$value['attachment_id'];
+                $result['items'][$key]['hash_class'] = 'sp-attachment-hash'.$value['attachment_id'] ;
+            }
+            
             $result = $result['items'];
             return $result;
         }

@@ -29,7 +29,16 @@
                                 }">
                                 <h4 data-bind="i18n: 'Drag or Select your files here'"></h4>
                             </div>
-                            <div class="attachment-container"></div>
+                            <div class="attachment-container">
+                                    <tbody data-bind="foreach: window.checkoutConfig.attachments">
+                                          <tr>
+                                              <td data-bind="text: entity_id"></td>
+                                              <td data-bind="text: email"></td>
+                                              <td data-bind="text: firstname  + ' ' + lastname"></td>
+                                              <td data-bind="text: created_at"></td>
+                                          </tr>
+                                      </tbody>
+                            </div>
                         </div>
                     </div>
                 </div>

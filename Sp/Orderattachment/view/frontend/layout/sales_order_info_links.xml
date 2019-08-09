@@ -8,11 +8,11 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="sales.order.info.links">
-                <block class="Magento\Sales\Block\Order\Link" name="sales.order.attachment.info">
+                <block class="Magento\Sales\Block\Order\Link" name="sales.order.attachment.info" ifconfig="orderattachments/general/enabled">
                     <arguments>
                         <argument name="key" xsi:type="string">attachment</argument>
                         <argument name="path" xsi:type="string">orderattachment/view/attachment</argument>
-                        <argument name="label" xsi:type="helper" helper="Sp\Orderattachment\Helper\Data::getLabel"></argument>
+                        <argument name="label" xsi:type="helper" helper="Sp\Orderattachment\Helper\Data::getTitle"></argument>
                     </arguments>
                 </block>
         </referenceBlock>

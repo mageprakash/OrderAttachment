@@ -12,16 +12,11 @@ use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 use Sp\Orderattachment\Model\Attachment;
+use Sp\Orderattachment\Helper\Data;
 
 
 class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcessorInterface
 {
-
-    const SHIPPING_STEP = 2;
-
-    const BILLING_STEP = 3;
-
-
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
@@ -31,6 +26,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @var CustomerSession
      */
     private $customerSession;
+
+    /**
+     * @var \Sp\Orderattachment\Helper\Data
+     */
+    protected $dataHelper;
 
     /**
      * LayoutProcessor constructor.
@@ -43,11 +43,13 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        CustomerSession $customerSession
+        CustomerSession $customerSession,
+        \Sp\Orderattachment\Helper\Data $dataHelper
 
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->customerSession = $customerSession;
+        $this->dataHelper = $dataHelper;
     }
 
     /**
@@ -60,21 +62,19 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      */
     public function process($jsLayout)
     {
-
-        switch ($this->scopeConfig->getValue(Attachment::XML_PATH_ATTACHMENT_ON_DISPLAY_ATTACHMENT, ScopeInterface::SCOPE_STORE)) {
-            case 'after-payment-methods':
-                $this->addToAfterPaymentMethods($jsLayout);
-                break;
-            case 'after-shipping-address':
-                $this->addToAfterShippingAddress($jsLayout);
-                break;
-             case 'after-shipping-methods':
-                $this->addToAfterShippingMethods($jsLayout);
-                break;
-            /*
-                default:
-                # code...
-                break;*/
+        if($this->dataHelper->isOrderAttachmentEnabled())
+        {
+            switch ($this->scopeConfig->getValue(Attachment::XML_PATH_ATTACHMENT_ON_DISPLAY_ATTACHMENT, ScopeInterface::SCOPE_STORE)){
+                case 'after-payment-methods':
+                    $this->addToAfterPaymentMethods($jsLayout);
+                    break;
+                case 'after-shipping-address':
+                    $this->addToAfterShippingAddress($jsLayout);
+                    break;
+                 case 'after-shipping-methods':
+                    $this->addToAfterShippingMethods($jsLayout);
+                    break;
+            }
         }
 
         return $jsLayout;

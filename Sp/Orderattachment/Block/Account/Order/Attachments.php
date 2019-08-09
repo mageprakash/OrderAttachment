@@ -62,11 +62,6 @@ class Attachments extends \Magento\Framework\View\Element\Template
         return $this->attachmentHelper->getOrderAttachments($orderId);
     }
 
-    public function isAllowedFileUpload()
-    {
-        return $this->dataHelper->isAllowedFileUpload();
-    }
-
     public function getUploadUrl()
     {
         return $this->getUrl(

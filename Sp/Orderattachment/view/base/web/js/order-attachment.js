@@ -146,7 +146,7 @@ define([
                     if (!result.success) {
                         self.addError(result.error);
                     }
-                    self.hideRowLoader(row);
+                    self.hideRowLoader();
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     self.addError(thrownError);
@@ -173,9 +173,11 @@ define([
                     if (result.success) {
                         delete self.files[pos];
                         row.fadeOut("500", function() {
-                            $(this).remove();
+                                $(this).remove();
                         });
+                        self.hideRowLoader();
                     }
+                    self.hideRowLoader();
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     self.addError(thrownError);
@@ -285,7 +287,7 @@ define([
                         '<input type="hidden" class="sp-attachment-id'+attachId+'" name="attachment-id" value="'+attachId+'">' +
                         '<input type="hidden" class="sp-attachment-hash'+attachId+'" name="attachment-hash" value="'+attachment.hash+'">';
             $(html).appendTo(content);
-            this.hideRowLoader(row);
+            this.hideRowLoader();
             var id = row.find('.sp-attachment-id' + attachId).val(),
                 hash = row.find('.sp-attachment-hash' + attachId).val();
             $('#attachment-comment' + attachId).focusout(function() {
@@ -300,15 +302,11 @@ define([
         },
 
         showRowLoader: function(row) {
-            var loader = row.find(".sp-attachment-loader");
-            $(loader).css({visibility:"visible", opacity: 0.0}).animate({opacity: 1.0}, 300);
+           $('body').trigger('processStart');
         },
 
         hideRowLoader: function(row) {
-            var loader = row.find(".sp-attachment-loader");
-            $(loader).animate({opacity: 0.0}, 300, function(){
-                $(loader).css("visibility","hidden");
-            });
+            $('body').trigger('processStop');
         }
     });
 
