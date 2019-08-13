@@ -65,10 +65,11 @@ class AttachmentConfigProvider implements ConfigProviderInterface
 
     public function getConfig()
     {
+        $uploadedAttachments = $this->getUploadedAttachments();
         $attachSize = $this->getOrderAttachmentFileSize();
         return [
-            'spAttachmentEnabled' => $this->isOrderAttachmentEnabled(),
-            'attachments' => $this->getUploadedAttachments(),
+            'spAttachmentEnabled'  => $this->isOrderAttachmentEnabled(),
+            'attachments'          => $uploadedAttachments['result'],
             'spAttachmentLimit'    => $this->getOrderAttachmentFileLimit(),
             'spAttachmentSize'     => $this->getOrderAttachmentFileSize(),
             'spAttachmentExt'      => $this->getOrderAttachmentFileExt(),
@@ -81,7 +82,8 @@ class AttachmentConfigProvider implements ConfigProviderInterface
             'spAttachmentInvalidSize' => __('Size of the file is greather than allowed') . '(' . $attachSize . ' KB)',
             'spAttachmentInvalidLimit' => __('You have reached the limit of files'),
             'spAttachmentTitle' =>  $this->dataHelper->getTitle(),
-            'spAttachmentInfromation' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION, ScopeInterface::SCOPE_STORE )
+            'spAttachmentInfromation' => $this->scopeConfig->getValue( Attachment::XML_PATH_ATTACHMENT_ON_ATTACHMENT_INFORMATION, ScopeInterface::SCOPE_STORE ),
+            'totalCount' => $uploadedAttachments['totalCount']
         ];
     }
 
@@ -107,18 +109,17 @@ class AttachmentConfigProvider implements ConfigProviderInterface
                 $attachment->setPreview($preview);
                 $attachment->setPath(basename($attachment->getPath()));
             }
-            $result = $attachments->toArray();
-            /*echo "<pre>";
-            print_r( $result);
-            die;*/
 
+            $result = $attachments->toArray();
+            
             foreach ($result['items'] as $key => $value) {
                 $result['items'][$key]['attachment_class'] = 'sp-attachment-id'.$value['attachment_id'];
                 $result['items'][$key]['hash_class'] = 'sp-attachment-hash'.$value['attachment_id'] ;
             }
             
             $result = $result['items'];
-            return $result;
+
+            return array('result' => $result,'totalCount'=> $attachments->getSize());
         }
 
         return false;

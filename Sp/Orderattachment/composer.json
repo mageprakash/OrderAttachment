@@ -3,7 +3,7 @@
     "description": "Order Attachment Magento 2 extension",
     "homepage": "https://github.com/prakash282/OrderAttachment",
     "type": "magento2-module",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "license": "GPL-3.0-or-later",
     "authors": [
         {

@@ -1,35 +1,23 @@
 <?php if ($this->isOrderAttachmentEnabled()) : ?>
-<?php
-    $style = '';
-?>
-<div class="block block-order-details-view">
-    <div class="block-title">
-        <strong><?php /* @escapeNotVerified */ echo __('Order Attachments') ?></strong>
-    </div>
-    <div class="block-content">
-        <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data">
-            <input class="input"
-                   type="file"
-                   style="display: none;"
-                   id="order-attachment"
-                   name="order-attachment[]" multiple />
-                <div class="sp-attachment-drag-area" style="cursor:pointer;<?php echo $style; ?>" data-role="order-attachment">
-                    <h4><?php  /* @escapeNotVerified */ echo __('Drag or Select your files here') ?></h4>
-                </div>
-            <div class="attachment-container"></div>
-        </form>
-    </div>
+
+
+<div data-bind="scope: 'Orderattachment'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
-<script>
-require([
-    'jquery',
-    'Sp_Orderattachment/js/order-attachment'
-], function ($, orderAttachment) {
-    $(function () {
-        $('[data-role=order-attachment]').orderAttachment({
-            config: <?php echo $this->getAttachmentConfig() ?>,
-        }, this);
-    });
-});
+
+<script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "Orderattachment": {
+                            "component": "Sp_Orderattachment/js/attachment",
+                             "dataconfig": <?= $this->getAttachmentConfig() ?>
+                        }
+                    }
+                }
+            }
+        }
 </script>
+
 <?php endif; ?>

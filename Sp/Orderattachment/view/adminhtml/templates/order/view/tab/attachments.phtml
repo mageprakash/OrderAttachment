@@ -1,29 +1,18 @@
-<section class="admin__page-section">
-    <div class="admin__page-section-title">
-        <span class="title"><?php /* @escapeNotVerified */ echo __('Order Attachments') ?></span>
-    </div>
-    <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data">
-        <input class="input"
-               type="file"
-               style="display: none;"
-               id="order-attachment"
-               name="order-attachment[]" multiple />
-        <div class="sp-attachment-drag-area" style="cursor:pointer" data-role="order-attachment">
-            <h4>Drag or Select your files here</h4>
-        </div>
-        <div class="attachment-container"></div>
-    </form>
-</section>
-<script>
-require([
-    'jquery',
-    'Sp_Orderattachment/js/order-attachment'
-], function ($, orderAttachment) {
-    $(function () {
-        $('[data-role=order-attachment]').orderAttachment({
-            config: <?php echo $this->getAttachmentConfig() ?>,
-        }, this);
-    });
-});
+<div data-bind="scope: 'Orderattachment'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
 
+<script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "Orderattachment": {
+                            "component": "Sp_Orderattachment/js/attachment",
+                             "dataconfig": <?= $this->getAttachmentConfig() ?>
+                        }
+                    }
+                }
+            }
+        }
 </script>

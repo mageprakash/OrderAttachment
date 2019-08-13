@@ -66,7 +66,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
         {
             switch ($this->scopeConfig->getValue(Attachment::XML_PATH_ATTACHMENT_ON_DISPLAY_ATTACHMENT, ScopeInterface::SCOPE_STORE)){
                 case 'after-payment-methods':
-                    $this->addToAfterPaymentMethods($jsLayout);
+                   $this->addToAfterPaymentMethods($jsLayout);
                     break;
                 case 'after-shipping-address':
                     $this->addToAfterShippingAddress($jsLayout);
@@ -89,7 +89,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             $fields = &$jsLayout['components']['checkout']['children']['steps']['children']['billing-step']
                        ['children']['payment']['children']['afterMethods']['children'];
             
-            $fields['order-attachment'] = ['component' => "Sp_Orderattachment/js/view/order/payment/attachment"];
+            $fields['order-attachment-after-payment-methods'] = ['component' => "Sp_Orderattachment/js/view/order/payment/payment-attachment"];
         }
 
         return $jsLayout;
@@ -103,9 +103,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
             $fields = &$jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
                       ['children']['shippingAddress']['children']['shipping-address-fieldset']['children'];
 
-            $fields['order-attachment'] =
+            $fields['order-attachment-after-shipment-address'] =
                 [
-                    'component' => "Sp_Orderattachment/js/view/order/shipment/attachment"
+                    'component' => "Sp_Orderattachment/js/view/order/shipment/shipment-attachment"
                 ];
         }
 
@@ -120,11 +120,11 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                 $fields = &$jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
                           ['children']['shippingAddress']['children'];
 
-                $fields['order-attachment-r'] =
+                $fields['order-attachment-after-shipment-methods'] =
                     [
                         'component' => "uiComponent",
                         'displayArea' => "shippingAdditional",
-                        'children' =>  ['attachment'=> ['component' => "Sp_Orderattachment/js/view/order/shipment/attachment"]]
+                        'children' =>  ['attachment'=> ['component' => "Sp_Orderattachment/js/view/order/shipment/shipment-attachment"]]
                     ];
           }
 

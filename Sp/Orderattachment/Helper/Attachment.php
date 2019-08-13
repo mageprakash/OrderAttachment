@@ -21,6 +21,11 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
     protected $checkoutSession;
 
     /**
+     * @var \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection
+     */
+    protected $attachmentCollection;
+
+    /**
      * @var \Magento\Framework\Math\Random
      */
     protected $random;
@@ -72,7 +77,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         \Sp\Orderattachment\Model\AttachmentFactory $attachmentFactory,
         \Magento\Framework\Filesystem $fileSystem,
         \Magento\Framework\Escaper $escaper,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder
+        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
+        \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection $attachmentCollection
     ) {
         parent::__construct($context);
         $this->uploadModel = $uploadModel;
@@ -81,6 +87,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $this->random = $random;
         $this->dateTime = $dateTime;
         $this->attachmentFactory = $attachmentFactory;
+        $this->attachmentCollection = $attachmentCollection;
         $this->fileSystem = $fileSystem;
         $this->escaper = $escaper;
         $this->jsonEncoder = $jsonEncoder;
@@ -94,7 +101,9 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
     public function saveAttachment($request)
     {
         try {
+            
             $uploadData = $request->getFiles()->get('order-attachment')[0];
+            $attachments = $this->attachmentCollection;
             $result = $this->uploadModel->uploadFileAndGetInfo($uploadData);
 
             unset($result['tmp_name']);
@@ -117,9 +126,18 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 
             if ($orderId = $request->getParam('order_id')) {
                 $attachment->setOrderId($orderId);
+
+                $attachments->addFieldToFilter('quote_id', ['is' => new \Zend_Db_Expr('null')]);
+                $attachments->addFieldToFilter('order_id', $orderId);
+
             } else {
                 $quote = $this->checkoutSession->getQuote();
                 $attachment->setQuoteId($quote->getId());
+
+                $attachments->addFieldToFilter('quote_id', $quote->getId());
+                $attachments->addFieldToFilter('order_id', ['is' => new \Zend_Db_Expr('null')]);
+
+
             }
 
             $attachment->save();
@@ -144,10 +162,24 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
                     'download' => 1
                 ]
             );
+
+            $url = $this->storeManager->getStore()->getBaseUrl(
+                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . "orderattachment/" . $attachment->getPath();
+
+            $result["attachment_count"] = $attachments->getSize();
+            $result["quote_id"] = $attachment->getOrderId();
+            $result["order_id"] = $attachment->getQuoteId();
+            $result['url'] = $url;
             $result['preview'] = $preview;
+            $result['path'] = basename($attachment->getPath());
+            $result["type"] = $attachment->getType();
+            $result["uploaded_at"] = $attachment->getUploadedAt();
+            $result["modified_at"] = $attachment->getModifiedAt();
             $result['download'] = $download;
             $result['attachment_id'] = $attachment->getId();
             $result['hash'] = $attachment->getHash();
+            $result['hash_class'] = 'sp-attachment-hash'.$attachment->getId();
+            $result['attachment_class'] = 'sp-attachment-id'.$attachment->getId();
             $result['comment'] = '';
         } catch (\Exception $e) {
             $result = [
@@ -174,7 +206,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $attachmentId = $requestParams['attachment'];
         $hash = $requestParams['hash'];
         $orderId = isset($requestParams['order_id']) ? $requestParams['order_id'] : null;
-
+        $attachments = $this->attachmentCollection;
+        
         if (!$isAjax || !$isPost || !$attachmentId || !$hash) {
             return ['success' => false, 'error' => __('Invalid Request Params')];
         }
@@ -200,7 +233,16 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             }
             $attachment->delete();
 
-            $result = ['success' => true];
+            if ($attachment->getOrderId()) {
+                $attachments->addFieldToFilter('quote_id', ['is' => new \Zend_Db_Expr('null')]);
+                $attachments->addFieldToFilter('order_id', $attachment->getOrderId());
+            } else {
+                $attachments->addFieldToFilter('quote_id', $attachment->getQuoteId());
+                $attachments->addFieldToFilter('order_id', ['is' => new \Zend_Db_Expr('null')]);
+            }
+
+            $result = ['success' => true,"attachment_count" => $attachments->getSize()];
+
         } catch (\Exception $e) {
             $result = [
                 'success' => false,
@@ -227,6 +269,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $hash = $requestParams['hash'];
         $comment = $this->escaper->escapeHtml($requestParams['comment']);
         $orderId = isset($requestParams['order_id']) ? $requestParams['order_id'] : null;
+        $attachments = $this->attachmentCollection;
 
         if (!$isAjax || !$isPost || !$attachmentId || !$hash) {
             return ['success' => false, 'error' => __('Invalid Request Params')];
@@ -245,7 +288,16 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 
             $attachment->setComment($comment);
             $attachment->save();
-            $result = ['success' => true];
+
+            if ($attachment->getOrderId()) {
+                $attachments->addFieldToFilter('quote_id', ['is' => new \Zend_Db_Expr('null')]);
+                $attachments->addFieldToFilter('order_id', $attachment->getOrderId());
+            } else {
+                $attachments->addFieldToFilter('quote_id', $attachment->getQuoteId());
+                $attachments->addFieldToFilter('order_id', ['is' => new \Zend_Db_Expr('null')]);
+            }
+
+            $result = ['success' => true,"attachment_count" => $attachments->getSize()];
         } catch (\Exception $e) {
             $result = [
                 'success' => false,
@@ -336,8 +388,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $attachmentModel = $this->attachmentFactory->create();
         if ($byOrder) {
             $attachments = $attachmentModel->getOrderAttachments($entityId);
-            $baseUrl = $this->storeManager->getStore()
-                ->getBaseUrl() . DirectoryList::MEDIA . '/orderattachment/';
+            $baseUrl = $this->storeManager->getStore()->getBaseUrl(
+                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . "orderattachment/";
         } else {
             $attachments = $attachmentModel->getAttachmentsByQuote($entityId);
         }
@@ -352,7 +404,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
                         'download' => 1
                     ]
                 );
-                $attachment['path'] = basename($attachment['path']);
+                $attachment['path'] = $attachment['path'];
                 $attachment['download'] = $download;
                 $attachment['comment'] = $this->escaper->escapeHtml($attachment['comment']);
 
@@ -366,12 +418,14 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
                     );
                     $attachment['preview'] = $preview;
                     $attachment['url'] = $baseUrl . $attachment['path'];
+                    $attachment['attachment_class'] = 'sp-attachment-id'.$attachment['attachment_id'];
+                    $attachment['hash_class'] = 'sp-attachment-hash'.$attachment['attachment_id'] ;
                 }
             }
 
             return $attachments;
         }
 
-        return false;
+        return [];
     }
 }

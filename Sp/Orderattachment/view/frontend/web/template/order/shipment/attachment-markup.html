@@ -2,13 +2,12 @@
     <div class="payment-option _collapsible opc-payment-additional order-attachments">
 
         <div class="payment-option-title field choice" data-role="title">
-            <h2 class="action action-toggle" id="block-attachments-heading" role="heading" aria-level="2" data-bind="text: getTitle()">
+            <h2 class="test-shipment action action-toggle" id="block-attachments-heading" role="heading" aria-level="2" data-bind="text: getTitle()">
             </h2>
         </div>
         <hr/>
 
         <div class="payment-option-content" >
-           <!--  <form id="attachment-form" class="form form-attachments" enctype="multipart/form-data"> -->
                 <div class="payment-option-inner">
                     <div class="field">
                         <div class="info" data-bind="html: getAttachmentInfo()"></div>
@@ -18,7 +17,7 @@
                                    style="display: none;"
                                    data-bind="event: {change: fileUpload}" 
                                    id="order-attachment"
-                                   name="order-attachment[]" multiple />
+                                   name="order-attachment[]" />
                             <div class="sp-attachment-drag-area" style="cursor:pointer"
                             data-bind="
                                 click: selectFiles,
@@ -29,20 +28,36 @@
                                 }">
                                 <h4 data-bind="i18n: 'Drag or Select your files here'"></h4>
                             </div>
-                            <div class="attachment-container">
-                                    <tbody data-bind="foreach: window.checkoutConfig.attachments">
-                                          <tr>
-                                              <td data-bind="text: entity_id"></td>
-                                              <td data-bind="text: email"></td>
-                                              <td data-bind="text: firstname  + ' ' + lastname"></td>
-                                              <td data-bind="text: created_at"></td>
-                                          </tr>
-                                      </tbody>
+                            <!-- <div data-bind="text: myTimer"></div> -->
+                            <div class="attachment-container" data-bind="foreach:attachmentList">
+                                    
+
+                                    <div data-bind="attr: { rel: hash, class:'sp-attachment-row attach-'+hash}">
+                                        <div class="sp-attachment-row-content">
+                                              <div class="order-attachment-preview">
+                                                 <img class="thumbnail" data-bind="attr: { src: url}">
+                                                 <div class="attachment-file">
+                                                    <div class="filename" data-bind="text: path"></div>
+                                                 </div>
+                                              </div>
+                                              <div class="order-attachment-content">
+                                                
+                                                <textarea data-bind="attr: { id: 'attachment-comment'+attachment_id, name:'attachment['+attachment_id+'][comment]'},text: comment,event: { blur: $parent.updateComment.bind($parent,attachment_id,hash,'attachment-comment'+attachment_id) }"  rows="4"
+                                                class="comment" placeholder="Write comment here">
+                                                </textarea>
+
+                                                <a id="sp-attachment-remove2" class="sp-attachment-remove" title="Remove Item" data-bind="click: $parent.deleteFile.bind($parent,attachment_id,hash)" href="#"></a>
+                                                <input type="hidden" data-bind="attr: { value: attachment_id, class: attachment_class}" name="attachment-id" >
+                                                <input type="hidden" name="attachment-hash"  data-bind="attr: { value: hash, class: hash_class}" >
+                                              </div>
+                                           
+                                           </div>
+                                    </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-<!--             </form> -->
         </div>
     </div>
 </div>
