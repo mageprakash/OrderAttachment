@@ -4,9 +4,9 @@
         <orderattachments>
             <general>
                 <enabled>0</enabled>
-                <attachment_title>Medical Prescription</attachment_title>
-         		<attachment_information></attachment_information>
-         		<display_attachment>after-shipping-methods</display_attachment>
+                <attachment_title>Order Attachments</attachment_title>
+                <attachment_information></attachment_information>
+                <display_attachment>after-shipping-methods</display_attachment>
                 <count>3</count>
                 <size>500</size>
                 <extension>jpg,jpeg,png,gif</extension>
