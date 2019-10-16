@@ -14,6 +14,10 @@ class AttachmentDisplayOptions implements ArrayInterface
     {
         return [
             [
+                'label' => __('Do Not Display'),
+                'value' => ''
+            ],
+            [
                 'label' => __('After Shipping Address'),
                 'value' => 'after-shipping-address'
             ],
