@@ -21,5 +21,7 @@
         "psr-4": {
             "Sp\\Orderattachment\\": ""
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
