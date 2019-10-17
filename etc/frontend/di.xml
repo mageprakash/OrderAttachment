@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
@@ -11,10 +10,10 @@
         </arguments>
     </type>
 
-	 <type name="Magento\Checkout\Block\Onepage">
+    <type name="Magento\Checkout\Block\Onepage">
         <arguments>
             <argument name="layoutProcessors" xsi:type="array">
-                <item name="orderAttributes" xsi:type="object">Sp\Orderattachment\Block\Checkout\LayoutProcessor</item>
+                <item name="sp_orderattachment_layout_processor" xsi:type="object">Sp\Orderattachment\Block\Checkout\LayoutProcessor</item>
             </argument>
         </arguments>
     </type>
