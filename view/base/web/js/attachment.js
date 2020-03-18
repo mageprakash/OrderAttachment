@@ -162,10 +162,6 @@ define(
                 });
             },
 
-            downloadFile: function () {
-                window.location = this.download;
-            },
-
             validateFile: function(file) {
                 if (!this.checkFileExtension(file)) {
                     return this.invalidExtError;
