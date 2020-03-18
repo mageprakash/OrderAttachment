@@ -5,9 +5,6 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Sp_Orderattachment::Orderattachments" sortOrder="10" title="OrderAttachment">
                     <resource id="Sp_Orderattachment::upload" sortOrder="10" title="Upload images"/>
-                    <resource id="Sp_Orderattachment::update" sortOrder="10" title="Update uploaded image"/>
-                    <resource id="Sp_Orderattachment::delete" sortOrder="10" title="Delete uploaded image"/>
-                    <resource id="Sp_Orderattachment::orderattachment_attachment" sortOrder="10" title="General Attachment"/>
                 </resource>
             </resource>
         </resources>
