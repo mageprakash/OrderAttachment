@@ -39,6 +39,7 @@
                                                 class="comment" placeholder="Write comment here">
                                                 </textarea>
 
+                                                <a id="sp-attachment-download1" class="sp-attachment-download" title="Download Item" data-bind="click: $parent.downloadFile"  href="#" name="downloadItem"></a>
                                                 <a id="sp-attachment-remove2" class="sp-attachment-remove" title="Remove Item" data-bind="click: $parent.deleteFile.bind($parent,attachment_id,hash)" href="#"></a>
                                                 <input type="hidden" data-bind="attr: { value: attachment_id, class: attachment_class}" name="attachment-id" >
                                                 <input type="hidden" name="attachment-hash"  data-bind="attr: { value: hash, class: hash_class}" >
