@@ -101,7 +101,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
     public function saveAttachment($request)
     {
         try {
-
+            
             $uploadData = $request->getFiles()->get('order-attachment')[0];
             $attachments = $this->attachmentCollection;
             $result = $this->uploadModel->uploadFileAndGetInfo($uploadData);
@@ -154,7 +154,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
                     'hash' => $attachment->getHash()
                 ]
             );
-            $download = $preview = $this->storeManager->getStore()->getUrl(
+            $download = $defaultStore->getUrl(
                 'orderattachment/attachment/preview',
                 [
                     'attachment' => $attachment->getId(),
@@ -207,7 +207,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $hash = $requestParams['hash'];
         $orderId = isset($requestParams['order_id']) ? $requestParams['order_id'] : null;
         $attachments = $this->attachmentCollection;
-
+        
         if (!$isAjax || !$isPost || !$attachmentId || !$hash) {
             return ['success' => false, 'error' => __('Invalid Request Params')];
         }
@@ -396,7 +396,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 
         if (count($attachments) > 0) {
             foreach ($attachments as &$attachment) {
-                $download = $preview = $this->storeManager->getStore()->getUrl(
+                $download = $this->_urlBuilder->getUrl(
                     'orderattachment/attachment/preview',
                     [
                         'attachment' => $attachment['attachment_id'],
