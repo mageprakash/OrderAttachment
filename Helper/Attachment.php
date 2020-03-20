@@ -154,7 +154,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
                     'hash' => $attachment->getHash()
                 ]
             );
-            $download = $this->storeManager->getStore()->getUrl(
+            $download = $defaultStore->getUrl(
                 'orderattachment/attachment/preview',
                 [
                     'attachment' => $attachment->getId(),
