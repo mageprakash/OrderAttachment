@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Sp_Orderattachment::Orderattachments" sortOrder="100" title="OrderAttachment">
+                    <resource id="Sp_Orderattachment::upload" sortOrder="10" title="Upload images"/>
+                    <resource id="Sp_Orderattachment::update" sortOrder="20" title="Update uploaded image"/>
+                    <resource id="Sp_Orderattachment::delete" sortOrder="30" title="Delete uploaded image"/>
+                    <resource id="Sp_Orderattachment::orderattachment_attachment" sortOrder="40" title="General Attachment"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
