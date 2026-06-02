@@ -8,6 +8,8 @@ class AttachmentOrderAfterPlaceObserver implements ObserverInterface
 {
     protected $attachmentCollection;
 
+    private $logger;
+
     public function __construct(
         \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection $attachmentCollection,
         \Psr\Log\LoggerInterface $logger

@@ -55,6 +55,12 @@ class AttachmentRepository implements AttachmentRepositoryInterface
      */
     private $storeManager;
 
+    public $blockFactory;
+
+    public $blockCollectionFactory;
+
+    public $dataBlockFactory;
+
     /**
      * @param ResourceBlock $resource
      * @param BlockFactory $attachmentFactory
