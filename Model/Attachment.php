@@ -4,6 +4,11 @@ namespace Sp\Orderattachment\Model;
 use Sp\Orderattachment\Api\Data\AttachmentInterface as AttachmentInt;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Data\Collection\AbstractDb as AbstractDbCollection;
+use Sp\Orderattachment\Model\ResourceModel\Attachment as AttachmentResource;
 
 class Attachment extends AbstractModel implements AttachmentInt, IdentityInterface
 {
@@ -60,6 +65,23 @@ class Attachment extends AbstractModel implements AttachmentInt, IdentityInterfa
     protected $_eventPrefix = 'orderattachment_attachment';
 
     /**
+     * @var AttachmentResource
+     */
+    protected $attachmentResource;
+
+    public function __construct(
+        Context $context,
+        Registry $registry,
+        AttachmentResource $attachmentResource,
+        ?AbstractResource $resource = null,
+        ?AbstractDbCollection $resourceCollection = null,
+        array $data = []
+    ) {
+        $this->attachmentResource = $attachmentResource;
+        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+    }
+
+    /**
      * Initialize resource model
      *
      * @return void
@@ -71,12 +93,12 @@ class Attachment extends AbstractModel implements AttachmentInt, IdentityInterfa
 
     public function getOrderAttachments($orderId)
     {
-        return $this->_getResource()->getOrderAttachments($orderId);
+        return $this->attachmentResource->getOrderAttachments($orderId);
     }
 
     public function getAttachmentsByQuote($quoteId)
     {
-        return $this->_getResource()->getAttachmentsByQuote($quoteId);
+        return $this->attachmentResource->getAttachmentsByQuote($quoteId);
     }
 
     /**
