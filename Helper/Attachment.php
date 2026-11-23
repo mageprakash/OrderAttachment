@@ -2,6 +2,7 @@
 namespace Sp\Orderattachment\Helper;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Sp\Orderattachment\Model\ResourceModel\Attachment as AttachmentResource;
 
 class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -56,6 +57,11 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
     protected $jsonEncoder;
 
     /**
+     * @var AttachmentResource
+     */
+    protected $attachmentResource;
+
+    /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Sp\Orderattachment\Helper\Upload $uploadModel
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -78,7 +84,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\Filesystem $fileSystem,
         \Magento\Framework\Escaper $escaper,
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection $attachmentCollection
+        \Sp\Orderattachment\Model\ResourceModel\Attachment\Collection $attachmentCollection,
+        AttachmentResource $attachmentResource
     ) {
         parent::__construct($context);
         $this->uploadModel = $uploadModel;
@@ -88,6 +95,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         $this->dateTime = $dateTime;
         $this->attachmentFactory = $attachmentFactory;
         $this->attachmentCollection = $attachmentCollection;
+        $this->attachmentResource = $attachmentResource;
         $this->fileSystem = $fileSystem;
         $this->escaper = $escaper;
         $this->jsonEncoder = $jsonEncoder;
@@ -140,7 +148,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
 
             }
 
-            $attachment->save();
+            $this->attachmentResource->save($attachment);
 
             $defaultStore = $this->storeManager
                 ->getStore(
@@ -213,7 +221,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         try {
-            $attachment = $this->attachmentFactory->create()->load($attachmentId);
+            $attachment = $this->attachmentFactory->create();
+            $this->attachmentResource->load($attachment, $attachmentId);
 
             if (!$attachment->getId() || ($orderId && $orderId !== $attachment->getOrderId())) {
                 return ['success' => false, 'error' => __('Can\'t find a attachment to delete.')];
@@ -231,7 +240,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             if (file_exists($attachFile)) {
                 unlink($attachFile);
             }
-            $attachment->delete();
+            $this->attachmentResource->delete($attachment);
 
             if ($attachment->getOrderId()) {
                 $attachments->addFieldToFilter('quote_id', ['is' => new \Zend_Db_Expr('null')]);
@@ -276,7 +285,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         try {
-            $attachment = $this->attachmentFactory->create()->load($attachmentId);
+            $attachment = $this->attachmentFactory->create();
+            $this->attachmentResource->load($attachment, $attachmentId);
 
             if (!$attachment->getId() || ($orderId && $orderId !== $attachment->getOrderId())) {
                 return ['success' => false, 'error' => __('Can\'t find a attachment to update.')];
@@ -287,7 +297,7 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
             }
 
             $attachment->setComment($comment);
-            $attachment->save();
+            $this->attachmentResource->save($attachment);
 
             if ($attachment->getOrderId()) {
                 $attachments->addFieldToFilter('quote_id', ['is' => new \Zend_Db_Expr('null')]);
@@ -330,7 +340,8 @@ class Attachment extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         try {
-            $attachment = $this->attachmentFactory->create()->load($attachmentId);
+            $attachment = $this->attachmentFactory->create();
+            $this->attachmentResource->load($attachment, $attachmentId);
 
             if (!$attachment->getId()) {
                 $result = ['success' => false, 'error' => __('Can\'t find a attachment to preview.')];
