@@ -3,6 +3,10 @@
 namespace Sp\Orderattachment\Model\ResourceModel\Attachment\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+use Magento\Framework\DB\Select;
 use Magento\Framework\Search\AggregationInterface;
 use Sp\Orderattachment\Model\ResourceModel\Attachment\Collection as AttachmentCollection;
 
@@ -23,8 +27,8 @@ class Collection extends AttachmentCollection implements SearchResultInterface
         $eventObject,
         $resourceModel,
         $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
-        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
+        ?AdapterInterface $connection = null,
+        ?AbstractDb $resource = null
     ) {
         parent::__construct(
             $entityFactory,
@@ -55,6 +59,7 @@ class Collection extends AttachmentCollection implements SearchResultInterface
     public function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
+        return $this;
     }
 
 
@@ -68,7 +73,14 @@ class Collection extends AttachmentCollection implements SearchResultInterface
      */
     public function getAllIds($limit = null, $offset = null)
     {
-        return $this->getConnection()->fetchCol($this->_getAllIdsSelect($limit, $offset), $this->_bindParams);
+        $idsSelect = clone $this->getSelect();
+        $idsSelect->reset(Select::ORDER);
+        $idsSelect->reset(Select::LIMIT_COUNT);
+        $idsSelect->reset(Select::LIMIT_OFFSET);
+        $idsSelect->reset(Select::COLUMNS);
+        $idsSelect->columns($this->getResource()->getIdFieldName(), 'main_table');
+        $idsSelect->limit($limit, $offset);
+        return $this->getConnection()->fetchCol($idsSelect, $this->_bindParams);
     }
 
     /**
@@ -88,7 +100,7 @@ class Collection extends AttachmentCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(?SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -122,7 +134,7 @@ class Collection extends AttachmentCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    public function setItems(?array $items = null)
     {
         return $this;
     }
